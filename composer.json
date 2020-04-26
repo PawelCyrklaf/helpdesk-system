@@ -9,6 +9,7 @@
         "doctrine/orm": "^2.7",
         "friendsofsymfony/rest-bundle": "^2.7",
         "gesdinet/jwt-refresh-token-bundle": "^0.9.1",
+        "jms/serializer-bundle": "^3.5",
         "lexik/jwt-authentication-bundle": "^2.6",
         "nelmio/api-doc-bundle": "^3.6",
         "nelmio/cors-bundle": "^2.0",
@@ -20,6 +21,7 @@
         "symfony/framework-bundle": "4.4.*",
         "symfony/serializer": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
+        "symfony/validator": "4.4.*",
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
