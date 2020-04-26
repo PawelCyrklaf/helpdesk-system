@@ -165,6 +165,9 @@
             "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
+    "symfony/asset": {
+        "version": "v4.4.7"
+    },
     "symfony/cache": {
         "version": "v4.4.7"
     },
@@ -329,6 +332,23 @@
     "symfony/translation-contracts": {
         "version": "v2.0.1"
     },
+    "symfony/twig-bridge": {
+        "version": "v4.4.7"
+    },
+    "symfony/twig-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "15a41bbd66a1323d09824a189b485c126bbefa51"
+        },
+        "files": [
+            "config/packages/test/twig.yaml",
+            "config/packages/twig.yaml",
+            "templates/base.html.twig"
+        ]
+    },
     "symfony/validator": {
         "version": "4.3",
         "recipe": {
@@ -359,6 +379,9 @@
     },
     "symfony/yaml": {
         "version": "v4.4.7"
+    },
+    "twig/twig": {
+        "version": "v3.0.3"
     },
     "webmozart/assert": {
         "version": "1.8.0"
