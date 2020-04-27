@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Swagger\Annotations as SWG;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
- * @SWG\Definition()
  */
 class Ticket
 {
+    use TimestampableEntity;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -20,7 +20,6 @@ class Ticket
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @SWG\Property()
      */
     private $subject;
 
