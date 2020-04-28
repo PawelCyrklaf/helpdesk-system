@@ -2,41 +2,27 @@
 
 namespace App\Controller;
 
+use App\Entity\Ticket;
+use App\Service\TicketService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Swagger\Annotations as SWG;
-
 
 class TicketController extends AbstractFOSRestController
 {
+    /** @var TicketService */
+    private $ticketService;
+
+    public function __construct(TicketService $ticketService)
+    {
+        $this->ticketService = $ticketService;
+    }
+
     /**
      * @Rest\Post("/ticket")
-     * @SWG\Response(
-     *     response=200,
-     *     description="Returns new ticket id",
-     * @SWG\Items(
-     *              type="object",
-     *              @SWG\Property(property="ticket_id", type="integer", description="Ticket ID"),
-     *          )
-     * )
-     * @SWG\Parameter(
-     *        name="body",
-     *        in="body",
-     *        description="ticket request object",
-     *        required=true,
-     *        @SWG\Schema(
-     *          type="object",
-     *          @Model(type=Ticket::class)
-     *        )
-     *      )
-     * @SWG\Tag(name="Ticket");
-     * @Security(name="Bearer")
      * @param Request $request
      * @return View
      */
@@ -47,7 +33,8 @@ class TicketController extends AbstractFOSRestController
         }
 
         $ticketData = json_decode($request->getContent(), true);
-        $result = $this->ticketService->add($ticketData);
+        $user = $this->getUser();
+        $result = $this->ticketService->add($ticketData, $user);
 
         if ($result instanceof Ticket) {
             return $this->view(['ticket_id' => $result->getId()], Response::HTTP_OK);
