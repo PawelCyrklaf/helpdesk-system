@@ -4,13 +4,18 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
  */
 class Ticket
 {
+    const UNRESOLVED = 0;
+    const SOLVED = 1;
+
     use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -20,21 +25,25 @@ class Ticket
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $subject;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tickets")
+     * @Assert\NotBlank()
      */
     private $author;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     private $status;
 
