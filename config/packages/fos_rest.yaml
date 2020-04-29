@@ -15,3 +15,7 @@ fos_rest:
         formats:
             json: true
             xml: false
+    exception:
+        exception_controller: 'fos_rest.exception.controller:showAction'
+        codes:
+            Doctrine\ORM\EntityNotFoundException: 404
