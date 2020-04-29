@@ -5,8 +5,6 @@ namespace App\Service;
 use App\Entity\Ticket;
 use App\Repository\TicketRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
-use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -32,7 +30,7 @@ class TicketService
         $this->validator = $validator;
     }
 
-    public function add(array $ticketData, $author)
+    public function add(array $ticketData, $author): string
     {
         $subject = $ticketData['subject'];
         $description = $ticketData['description'];
@@ -49,16 +47,13 @@ class TicketService
             return (string)$errors;
         }
 
-        try {
-            $this->entityManager->persist($ticket);
-            $this->entityManager->flush();
-            return $ticket;
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-        }
+        $this->entityManager->persist($ticket);
+        $this->entityManager->flush();
+        return $ticket;
     }
 
-    public function update($ticketData, int $ticketId)
+
+    public function update($ticketData, int $ticketId): Ticket
     {
         $subject = $ticketData['subject'];
         $description = $ticketData['description'];
@@ -72,15 +67,12 @@ class TicketService
         $ticket->setSubject($subject);
         $ticket->setDescription($description);
 
-        try {
-            $this->entityManager->flush();
-            return $ticket;
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-        }
+        $this->entityManager->flush();
+        return $ticket;
     }
 
-    public function remove(int $ticketId)
+
+    public function remove(int $ticketId): bool
     {
         $ticket = $this->ticketRepository->find($ticketId);
 
@@ -88,16 +80,12 @@ class TicketService
             throw new NotFoundHttpException('Ticket with id ' . $ticketId . ' does not exist!');
         }
 
-        try {
-            $this->entityManager->remove($ticket);
-            $this->entityManager->flush();
-            return true;
-        } catch (ORMException $e) {
-            return false;
-        }
+        $this->entityManager->remove($ticket);
+        $this->entityManager->flush();
+        return true;
     }
 
-    public function getTicket(int $ticketId)
+    public function getTicket(int $ticketId): ?Ticket
     {
         $ticket = $this->ticketRepository->find($ticketId);
 
@@ -107,12 +95,13 @@ class TicketService
         return $ticket;
     }
 
-    public function getTickets()
+
+    public function getTickets(): array
     {
         return $this->ticketRepository->findAll();
     }
 
-    public function changeStatus($ticketData, $ticketId)
+    public function changeStatus($ticketData, $ticketId): Ticket
     {
         $ticket = $this->ticketRepository->find($ticketId);
         $status = $ticketData['status'];
@@ -123,11 +112,7 @@ class TicketService
 
         $ticket->setStatus($status);
 
-        try {
-            $this->entityManager->flush();
-            return $ticket;
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-        }
+        $this->entityManager->flush();
+        return $ticket;
     }
 }
