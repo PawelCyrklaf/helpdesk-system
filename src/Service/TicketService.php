@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\Ticket;
 use App\Repository\TicketRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TicketService
@@ -30,7 +29,7 @@ class TicketService
         $this->validator = $validator;
     }
 
-    public function add(array $ticketData, $author): string
+    public function add(array $ticketData, $author)
     {
         $subject = $ticketData['subject'];
         $description = $ticketData['description'];
@@ -52,17 +51,10 @@ class TicketService
         return $ticket;
     }
 
-
-    public function update($ticketData, int $ticketId): Ticket
+    public function update(array $ticketData, Ticket $ticket): Ticket
     {
         $subject = $ticketData['subject'];
         $description = $ticketData['description'];
-
-        $ticket = $this->ticketRepository->find($ticketId);
-
-        if (!$ticket) {
-            throw new NotFoundHttpException('Ticket with id ' . $ticketId . ' does not exist!');
-        }
 
         $ticket->setSubject($subject);
         $ticket->setDescription($description);
@@ -71,45 +63,21 @@ class TicketService
         return $ticket;
     }
 
-
-    public function remove(int $ticketId): bool
+    public function remove(Ticket $ticket): bool
     {
-        $ticket = $this->ticketRepository->find($ticketId);
-
-        if (!$ticket) {
-            throw new NotFoundHttpException('Ticket with id ' . $ticketId . ' does not exist!');
-        }
-
         $this->entityManager->remove($ticket);
         $this->entityManager->flush();
         return true;
     }
-
-    public function getTicket(int $ticketId): ?Ticket
-    {
-        $ticket = $this->ticketRepository->find($ticketId);
-
-        if (!$ticket) {
-            throw new NotFoundHttpException('Ticket with id ' . $ticketId . ' does not exist!');
-        }
-        return $ticket;
-    }
-
 
     public function getTickets(): array
     {
         return $this->ticketRepository->findAll();
     }
 
-    public function changeStatus($ticketData, $ticketId): Ticket
+    public function changeStatus(array $ticketData, Ticket $ticket): Ticket
     {
-        $ticket = $this->ticketRepository->find($ticketId);
         $status = $ticketData['status'];
-
-        if (!$ticket) {
-            throw new NotFoundHttpException('Ticket with id ' . $ticketId . ' does not exist!');
-        }
-
         $ticket->setStatus($status);
 
         $this->entityManager->flush();

@@ -43,19 +43,19 @@ class TicketController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Put("/ticket/{ticketId}")
+     * @Rest\Put("/ticket/{id}")
      * @param Request $request
-     * @param int $ticketId
+     * @param Ticket $ticket
      * @return View
      */
-    public function update(Request $request, int $ticketId)
+    public function update(Ticket $ticket, Request $request)
     {
         if ($request->getContent() == null) {
             throw new BadRequestHttpException('Request body cannot be null');
         }
 
         $ticketData = json_decode($request->getContent(), true);
-        $result = $this->ticketService->update($ticketData, $ticketId);
+        $result = $this->ticketService->update($ticketData, $ticket);
 
         if ($result) {
             return $this->view([], Response::HTTP_OK);
@@ -64,13 +64,13 @@ class TicketController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Delete("/ticket/{ticketId}")
-     * @param int $ticketId
+     * @Rest\Delete("/ticket/{id}")
+     * @param Ticket $ticket
      * @return bool|View
      */
-    public function remove(int $ticketId)
+    public function remove(Ticket $ticket)
     {
-        $result = $this->ticketService->remove($ticketId);
+        $result = $this->ticketService->remove($ticket);
 
         if ($result) {
             return $this->view([], Response::HTTP_NO_CONTENT);
@@ -79,14 +79,13 @@ class TicketController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Get("/ticket/{ticketId}")
-     * @param int $ticketId
+     * @Rest\Get("/ticket/{id}")
+     * @param Ticket $ticket
      * @return View
      */
-    public function details(int $ticketId)
+    public function details(Ticket $ticket)
     {
-        $tickets = $this->ticketService->getTicket($ticketId);
-        return $this->view($tickets, Response::HTTP_OK);
+        return $this->view($ticket, Response::HTTP_OK);
     }
 
     /**
@@ -99,19 +98,19 @@ class TicketController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Put("/ticket/{ticketId}/status")
+     * @Rest\Put("/ticket/{id}/status")
      * @param Request $request
-     * @param int $ticketId
+     * @param Ticket $ticket
      * @return View
      */
-    public function changeStatus(Request $request, int $ticketId)
+    public function changeStatus(Request $request, Ticket $ticket)
     {
         if ($request->getContent() == null) {
             throw new BadRequestHttpException('Request body cannot be null');
         }
 
         $ticketData = json_decode($request->getContent(), true);
-        $result = $this->ticketService->changeStatus($ticketData, $ticketId);
+        $result = $this->ticketService->changeStatus($ticketData, $ticket);
 
         if ($result) {
             return $this->view([], Response::HTTP_OK);
