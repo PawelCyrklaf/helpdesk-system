@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -23,6 +24,20 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $surname;
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -36,13 +51,33 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Serializer\Exclude()
+     * @Assert\NotBlank()
      */
     private $password;
-
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    public function setSurname($surname): void
+    {
+        $this->surname = $surname;
     }
 
     public function getEmail(): ?string
