@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Ticket;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -20,10 +21,13 @@ class EmailTemplateService
     public function getNewTicketEmailTemplate(Ticket $ticket): Email
     {
         $email = $ticket->getAuthor()->getEmail();
-        return (new Email())
+        return (new TemplatedEmail())
             ->from($this->container->getParameter('helpdesk_email'))
             ->to($email)
             ->subject(sprintf('Your ticket with id %d has been added', $ticket->getId()))
-            ->text('Your ticket has been added and waiting for answer!');
+            ->htmlTemplate('email/new-ticket.html.twig')
+            ->context(array(
+                'ticket' => $ticket
+            ));
     }
 }
