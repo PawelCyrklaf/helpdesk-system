@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
+use App\Event\TicketEvent;
 use App\Service\TicketService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -15,9 +17,15 @@ class TicketController extends AbstractFOSRestController
 {
     private TicketService $ticketService;
 
-    public function __construct(TicketService $ticketService)
+    private EventDispatcherInterface $dispatcher;
+
+    public function __construct(
+        TicketService $ticketService,
+        EventDispatcherInterface $dispatcher
+    )
     {
         $this->ticketService = $ticketService;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -36,6 +44,9 @@ class TicketController extends AbstractFOSRestController
         $result = $this->ticketService->add($ticketData, $user);
 
         if ($result instanceof Ticket) {
+            $ticketEvent = new TicketEvent($result);
+            $this->dispatcher->dispatch($ticketEvent, TicketEvent::NEW_TICKET);
+
             return $this->view(['ticket_id' => $result->getId()], Response::HTTP_OK);
         }
         return $this->view(['error' => $result], Response::HTTP_BAD_REQUEST);
