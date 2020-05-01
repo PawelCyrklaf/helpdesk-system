@@ -10,14 +10,14 @@ class TicketEvent extends Event
     public const NEW_TICKET = 'ticket.added';
     public const TICKET_CLOSED = 'ticket.closed';
 
-    protected $ticket;
+    protected Ticket $ticket;
 
     public function __construct(Ticket $ticket)
     {
         $this->ticket = $ticket;
     }
 
-    public function getTicket()
+    public function getTicket(): Ticket
     {
         return $this->ticket;
     }

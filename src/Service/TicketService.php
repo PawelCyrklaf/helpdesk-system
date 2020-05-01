@@ -9,14 +9,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TicketService
 {
-    /** @var TicketRepository */
-    private $ticketRepository;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var ValidatorInterface */
-    private $validator;
+    private TicketRepository $ticketRepository;
+    private EntityManagerInterface $entityManager;
+    private ValidatorInterface $validator;
 
     public function __construct(
         TicketRepository $ticketRepository,

@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Ticket
 {
-    const UNRESOLVED = 0;
-    const SOLVED = 1;
+    public const UNRESOLVED = 0;
+    public const SOLVED = 1;
 
     use TimestampableEntity;
 
@@ -21,38 +21,38 @@ class Ticket
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $subject;
+    private string $subject;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
-    private $description;
+    private string $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tickets")
      * @Assert\NotBlank()
      */
-    private $author;
+    private User $author;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      */
-    private $status;
+    private int $status;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getSubject(): ?string
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -64,7 +64,7 @@ class Ticket
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -76,19 +76,19 @@ class Ticket
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
 
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): int
     {
         return $this->status;
     }

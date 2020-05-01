@@ -13,8 +13,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TicketController extends AbstractFOSRestController
 {
-    /** @var TicketService */
-    private $ticketService;
+    private TicketService $ticketService;
 
     public function __construct(TicketService $ticketService)
     {
