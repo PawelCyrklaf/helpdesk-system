@@ -3,10 +3,19 @@
 namespace App\EventSubscriber;
 
 use App\Event\TicketEvent;
+use App\Service\EmailTemplateService;
+use App\Service\MailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TicketSubscriber implements EventSubscriberInterface
 {
+    private MailService $mailService;
+
+    public function __construct(MailService $mailService)
+    {
+        $this->mailService = $mailService;
+    }
+
     public static function getSubscribedEvents()
     {
         return [
@@ -18,9 +27,8 @@ class TicketSubscriber implements EventSubscriberInterface
     public function newTicket(TicketEvent $ticketEvent)
     {
         $ticket = $ticketEvent->getTicket();
-
         if ($ticket) {
-            // TODO Add implementation: send email to support with information about new ticket
+            $this->mailService->send($ticket, EmailTemplateService::NEW_TICKET_TEMPLATE);
         }
     }
 
