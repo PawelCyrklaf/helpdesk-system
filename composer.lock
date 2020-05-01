@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6d1ffe212d43fbbf3f924faf0342b8c",
+    "content-hash": "82aa4d2587491bccdf0a2f746aae681c",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4142,7 +4142,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v4.4.7",
+            "version": "v4.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -7401,7 +7401,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*"
