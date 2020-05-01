@@ -18,7 +18,7 @@ class EmailTemplateService
         $this->container = $container;
     }
 
-    public function getNewTicketEmailTemplate(Ticket $ticket): Email
+    public function getNewTicketEmailTemplate(Ticket $ticket): TemplatedEmail
     {
         $email = $ticket->getAuthor()->getEmail();
         return (new TemplatedEmail())
