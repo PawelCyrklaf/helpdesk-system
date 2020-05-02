@@ -2,12 +2,13 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\TicketEvent;
+use App\Event\TicketClosedEvent;
+use App\Event\TicketCreatedEvent;
 use App\Service\EmailTemplateService;
 use App\Service\MailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class TicketSubscriber implements EventSubscriberInterface
+final class TicketSubscriber implements EventSubscriberInterface
 {
     private MailService $mailService;
 
@@ -19,12 +20,12 @@ class TicketSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            TicketEvent::NEW_TICKET => ['newTicket'],
-            TicketEvent::TICKET_CLOSED => ['closedTicket'],
+            TicketCreatedEvent::class => ['newTicket'],
+            TicketClosedEvent::class => ['closedTicket'],
         ];
     }
 
-    public function newTicket(TicketEvent $ticketEvent)
+    public function newTicket(TicketCreatedEvent $ticketEvent)
     {
         $ticket = $ticketEvent->getTicket();
         if ($ticket) {
@@ -32,7 +33,7 @@ class TicketSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function closedTicket(TicketEvent $ticketEvent)
+    public function closedTicket(TicketClosedEvent $ticketEvent)
     {
         $ticket = $ticketEvent->getTicket();
 

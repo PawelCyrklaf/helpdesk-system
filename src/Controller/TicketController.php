@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
-use App\Event\TicketEvent;
+use App\Event\TicketCreatedEvent;
 use App\Service\TicketService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -44,8 +44,8 @@ class TicketController extends AbstractFOSRestController
         $result = $this->ticketService->add($ticketData, $user);
 
         if ($result instanceof Ticket) {
-            $ticketEvent = new TicketEvent($result);
-            $this->dispatcher->dispatch($ticketEvent, TicketEvent::NEW_TICKET);
+            $ticketEvent = new TicketCreatedEvent($result);
+            $this->dispatcher->dispatch($ticketEvent, TicketCreatedEvent::class);
 
             return $this->view(['ticket_id' => $result->getId()], Response::HTTP_OK);
         }

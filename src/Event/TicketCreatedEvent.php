@@ -5,12 +5,9 @@ namespace App\Event;
 use App\Entity\Ticket;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class TicketEvent extends Event
+final class TicketCreatedEvent extends Event
 {
-    public const NEW_TICKET = 'ticket.added';
-    public const TICKET_CLOSED = 'ticket.closed';
-
-    protected Ticket $ticket;
+    private Ticket $ticket;
 
     public function __construct(Ticket $ticket)
     {
