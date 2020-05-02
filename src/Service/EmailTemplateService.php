@@ -5,11 +5,11 @@ namespace App\Service;
 use App\Entity\Ticket;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Mime\Email;
 
 class EmailTemplateService
 {
     public const NEW_TICKET_TEMPLATE = 0;
+    public const TICKET_CLOSED_TEMPLATE = 1;
 
     private ContainerInterface $container;
 
@@ -26,6 +26,19 @@ class EmailTemplateService
             ->to($email)
             ->subject(sprintf('Your ticket with id %d has been added', $ticket->getId()))
             ->htmlTemplate('email/new-ticket.html.twig')
+            ->context(array(
+                'ticket' => $ticket
+            ));
+    }
+
+    public function getClosedTicketEmailTemplate(Ticket $ticket): TemplatedEmail
+    {
+        $email = $ticket->getAuthor()->getEmail();
+        return (new TemplatedEmail())
+            ->from($this->container->getParameter('helpdesk_email'))
+            ->to($email)
+            ->subject(sprintf('Your ticket with id %d has been closed', $ticket->getId()))
+            ->htmlTemplate('email/closed-ticket.html.twig')
             ->context(array(
                 'ticket' => $ticket
             ));

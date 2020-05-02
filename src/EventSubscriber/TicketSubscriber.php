@@ -17,7 +17,7 @@ final class TicketSubscriber implements EventSubscriberInterface
         $this->mailService = $mailService;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             TicketCreatedEvent::class => ['newTicket'],
@@ -25,7 +25,7 @@ final class TicketSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function newTicket(TicketCreatedEvent $ticketEvent)
+    public function newTicket(TicketCreatedEvent $ticketEvent): void
     {
         $ticket = $ticketEvent->getTicket();
         if ($ticket) {
@@ -33,12 +33,12 @@ final class TicketSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function closedTicket(TicketClosedEvent $ticketEvent)
+    public function closedTicket(TicketClosedEvent $ticketEvent): void
     {
         $ticket = $ticketEvent->getTicket();
 
         if ($ticket) {
-            // TODO Add implementation: send email to customer with information about their ticket is closed
+            $this->mailService->send($ticket, EmailTemplateService::NEW_TICKET_TEMPLATE);
         }
     }
 }

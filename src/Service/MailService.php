@@ -19,14 +19,18 @@ class MailService
         $this->emailTemplateService = $emailTemplateService;
     }
 
-    public function send(Ticket $ticket, int $emailTemplate)
+    public function send(Ticket $ticket, int $emailTemplate): bool
     {
         switch ($emailTemplate) {
             case EmailTemplateService::NEW_TICKET_TEMPLATE:
                 $this->mailer->send($this->emailTemplateService->getNewTicketEmailTemplate($ticket));
                 break;
+            case EmailTemplateService::TICKET_CLOSED_TEMPLATE:
+                $this->mailer->send($this->emailTemplateService->getClosedTicketEmailTemplate($ticket));
+                break;
             default:
                 return false;
         }
+        return true;
     }
 }
