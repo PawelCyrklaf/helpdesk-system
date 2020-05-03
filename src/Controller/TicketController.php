@@ -9,6 +9,7 @@ use App\Service\TicketService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -101,10 +102,12 @@ class TicketController extends AbstractFOSRestController
 
     /**
      * @Rest\Get("/tickets")
+     * @param Request $request
+     * @return View
      */
-    public function list()
+    public function list(Request $request)
     {
-        $tickets = $this->ticketService->getTickets();
+        $tickets = $this->ticketService->getTickets($request);
         return $this->view($tickets, Response::HTTP_OK);
     }
 
@@ -135,4 +138,5 @@ class TicketController extends AbstractFOSRestController
         }
         return $this->view(['error' => $result], Response::HTTP_BAD_REQUEST);
     }
+
 }

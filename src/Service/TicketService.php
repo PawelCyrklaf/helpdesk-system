@@ -4,20 +4,25 @@ namespace App\Service;
 
 use App\Entity\Ticket;
 use App\Repository\TicketRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TicketService
 {
     private TicketRepository $ticketRepository;
     private ValidatorInterface $validator;
+    private PaginatorInterface $paginator;
 
     public function __construct(
         TicketRepository $ticketRepository,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        PaginatorInterface $paginator
     )
     {
         $this->ticketRepository = $ticketRepository;
         $this->validator = $validator;
+        $this->paginator = $paginator;
     }
 
     public function add(array $ticketData, $author)
@@ -59,9 +64,10 @@ class TicketService
         return true;
     }
 
-    public function getTickets(): array
+    public function getTickets(Request $request): iterable
     {
-        return $this->ticketRepository->findAll();
+        $tickets = $this->ticketRepository->findAll();
+        return $this->paginator->paginate($tickets, $request->query->getInt('page', 1), $request->query->getInt('limit', 1))->getItems();
     }
 
     public function changeStatus(array $ticketData, Ticket $ticket): Ticket
