@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
+use App\Event\TicketClosedEvent;
 use App\Event\TicketCreatedEvent;
 use App\Service\TicketService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -123,6 +124,13 @@ class TicketController extends AbstractFOSRestController
         $result = $this->ticketService->changeStatus($ticketData, $ticket);
 
         if ($result) {
+            $status = $result->getStatus();
+
+            if ($status === Ticket::SOLVED) {
+                $ticketEvent = new TicketClosedEvent($result);
+                $this->dispatcher->dispatch($ticketEvent, TicketClosedEvent::class);
+            }
+
             return $this->view([], Response::HTTP_OK);
         }
         return $this->view(['error' => $result], Response::HTTP_BAD_REQUEST);
