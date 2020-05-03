@@ -4,23 +4,19 @@ namespace App\Service;
 
 use App\Entity\Ticket;
 use App\Repository\TicketRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TicketService
 {
     private TicketRepository $ticketRepository;
-    private EntityManagerInterface $entityManager;
     private ValidatorInterface $validator;
 
     public function __construct(
         TicketRepository $ticketRepository,
-        EntityManagerInterface $entityManager,
         ValidatorInterface $validator
     )
     {
         $this->ticketRepository = $ticketRepository;
-        $this->entityManager = $entityManager;
         $this->validator = $validator;
     }
 
@@ -41,8 +37,7 @@ class TicketService
             return (string)$errors;
         }
 
-        $this->entityManager->persist($ticket);
-        $this->entityManager->flush();
+        $this->ticketRepository->save($ticket);
         return $ticket;
     }
 
@@ -54,14 +49,13 @@ class TicketService
         $ticket->setSubject($subject);
         $ticket->setDescription($description);
 
-        $this->entityManager->flush();
+        $this->ticketRepository->update();
         return $ticket;
     }
 
     public function remove(Ticket $ticket): bool
     {
-        $this->entityManager->remove($ticket);
-        $this->entityManager->flush();
+        $this->ticketRepository->remove($ticket);
         return true;
     }
 
@@ -75,7 +69,7 @@ class TicketService
         $status = $ticketData['status'];
         $ticket->setStatus($status);
 
-        $this->entityManager->flush();
+        $this->ticketRepository->update();
         return $ticket;
     }
 }
