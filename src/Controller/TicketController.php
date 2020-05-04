@@ -9,7 +9,7 @@ use App\Service\TicketService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
-use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +62,7 @@ class TicketController extends AbstractFOSRestController
      */
     public function update(Ticket $ticket, Request $request)
     {
+        $this->denyAccessUnlessGranted('TICKET_EDIT', $ticket);
         if ($request->getContent() == null) {
             throw new BadRequestHttpException('Request body cannot be null');
         }
@@ -77,6 +78,7 @@ class TicketController extends AbstractFOSRestController
 
     /**
      * @Rest\Delete("/ticket/{id}")
+     * @IsGranted("ROLE_ADMIN",message="Only administrator can remove ticket.")
      * @param Ticket $ticket
      * @return bool|View
      */
@@ -97,6 +99,7 @@ class TicketController extends AbstractFOSRestController
      */
     public function details(Ticket $ticket)
     {
+        $this->denyAccessUnlessGranted('TICKET_VIEW', $ticket);
         return $this->view($ticket, Response::HTTP_OK);
     }
 
@@ -107,17 +110,18 @@ class TicketController extends AbstractFOSRestController
      */
     public function list(Request $request)
     {
-        $tickets = $this->ticketService->getTickets($request);
+        $tickets = $this->ticketService->getTickets($request, $this->getUser());
         return $this->view($tickets, Response::HTTP_OK);
     }
 
     /**
-     * @Rest\Put("/ticket/{id}/status")
+     * @Rest\Put("/ticket/{id}/close")
+     * @IsGranted("ROLE_ADMIN",message="Only administrator can close ticket.")
      * @param Request $request
      * @param Ticket $ticket
      * @return View
      */
-    public function changeStatus(Request $request, Ticket $ticket)
+    public function closeTicket(Request $request, Ticket $ticket)
     {
         if ($request->getContent() == null) {
             throw new BadRequestHttpException('Request body cannot be null');
