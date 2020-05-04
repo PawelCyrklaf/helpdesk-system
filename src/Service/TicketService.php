@@ -3,9 +3,11 @@
 namespace App\Service;
 
 use App\Entity\Ticket;
+use App\Entity\User;
 use App\Repository\TicketRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TicketService
@@ -64,10 +66,14 @@ class TicketService
         return true;
     }
 
-    public function getTickets(Request $request): iterable
+    public function getTickets(Request $request, UserInterface $user): iterable
     {
-        $tickets = $this->ticketRepository->findAll();
-        return $this->paginator->paginate($tickets, $request->query->getInt('page', 1), $request->query->getInt('limit', 1))->getItems();
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            $tickets = $this->ticketRepository->findAll();
+        } else {
+            $tickets = $this->ticketRepository->findBy(array('author' => $user));
+        }
+        return $this->paginator->paginate($tickets, $request->query->getInt('page', 1), $request->query->getInt('limit', 10))->getItems();
     }
 
     public function changeStatus(array $ticketData, Ticket $ticket): Ticket
