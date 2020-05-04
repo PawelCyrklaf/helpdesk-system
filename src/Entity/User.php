@@ -23,13 +23,13 @@ class User implements UserInterface
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180, unique=false)
      * @Assert\NotBlank()
      */
     private string $name;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180, unique=false)
      * @Assert\NotBlank()
      */
     private string $surname;
