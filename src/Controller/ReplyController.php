@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Reply;
 use App\Entity\Ticket;
 use App\Service\ReplyService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;

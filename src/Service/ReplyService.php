@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Reply;
+use App\Repository\ReplyRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ReplyService
