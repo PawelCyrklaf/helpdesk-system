@@ -32,6 +32,9 @@ class TicketVoter extends Voter
             case 'TICKET_VIEW':
                 return $this->canView($ticket, $user);
                 break;
+            case 'TICKET_ADD_REPLY':
+                return $this->canAddReply($ticket, $user);
+                break;
         }
 
         return false;
@@ -47,6 +50,15 @@ class TicketVoter extends Voter
     }
 
     public function canView(Ticket $ticket, User $user)
+    {
+        if (in_array("ROLE_ADMIN", $user->getRoles())) {
+            return true;
+        } else {
+            return $user === $ticket->getAuthor();
+        }
+    }
+
+    public function canAddReply(Ticket $ticket, User $user)
     {
         if (in_array("ROLE_ADMIN", $user->getRoles())) {
             return true;
