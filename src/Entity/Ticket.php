@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -46,6 +48,16 @@ class Ticket
      * @Assert\NotBlank()
      */
     private int $status;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="ticket")
+     */
+    private ArrayCollection $replies;
+
+    public function __construct()
+    {
+        $this->replies = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -96,6 +108,37 @@ class Ticket
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reply[]
+     */
+    public function getReplies(): Collection
+    {
+        return $this->replies;
+    }
+
+    public function addReply(Reply $reply): self
+    {
+        if (!$this->replies->contains($reply)) {
+            $this->replies[] = $reply;
+            $reply->setTicket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReply(Reply $reply): self
+    {
+        if ($this->replies->contains($reply)) {
+            $this->replies->removeElement($reply);
+            // set the owning side to null (unless already changed)
+            if ($reply->getTicket() === $this) {
+                $reply->setTicket(null);
+            }
+        }
 
         return $this;
     }

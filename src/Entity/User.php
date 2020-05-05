@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
@@ -54,6 +56,16 @@ class User implements UserInterface
      * @Assert\NotBlank()
      */
     private string $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="author")
+     */
+    private ArrayCollection $replies;
+
+    public function __construct()
+    {
+        $this->replies = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -151,5 +163,36 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Reply[]
+     */
+    public function getReplies(): Collection
+    {
+        return $this->replies;
+    }
+
+    public function addReply(Reply $reply): self
+    {
+        if (!$this->replies->contains($reply)) {
+            $this->replies[] = $reply;
+            $reply->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReply(Reply $reply): self
+    {
+        if ($this->replies->contains($reply)) {
+            $this->replies->removeElement($reply);
+            // set the owning side to null (unless already changed)
+            if ($reply->getAuthor() === $this) {
+                $reply->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }
