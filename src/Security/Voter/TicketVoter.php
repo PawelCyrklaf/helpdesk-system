@@ -11,7 +11,7 @@ class TicketVoter extends Voter
 {
     protected function supports($attribute, $subject)
     {
-        return in_array($attribute, ['TICKET_EDIT', 'TICKET_VIEW'])
+        return in_array($attribute, ['TICKET_EDIT', 'TICKET_VIEW', 'TICKET_ADD_REPLY'])
             && $subject instanceof Ticket;
     }
 
