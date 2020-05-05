@@ -42,7 +42,7 @@ class ReplyController extends AbstractFOSRestController
 
         $replyData = json_decode($request->getContent(), true);
         $user = $this->getUser();
-        $result = $this->replyService->add($replyData, $user);
+        $result = $this->replyService->add($replyData, $user, $ticket);
 
         if ($result instanceof Reply) {
 

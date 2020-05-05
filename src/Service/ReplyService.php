@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Reply;
+use App\Entity\Ticket;
 use App\Repository\ReplyRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -20,13 +21,14 @@ class ReplyService
         $this->validator = $validator;
     }
 
-    public function add(array $replyData, $author)
+    public function add(array $replyData, $author, Ticket $ticket)
     {
         $message = $replyData['message'];
 
         $reply = new Reply();
         $reply->setMessage($message);
         $reply->setAuthor($author);
+        $reply->setTicket($ticket);
 
         $errors = $this->validator->validate($reply);
         if (count($errors) > 0) {
