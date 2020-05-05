@@ -59,8 +59,9 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="author")
+     * @Serializer\Exclude()
      */
-    private ArrayCollection $replies;
+    private Collection $replies;
 
     public function __construct()
     {
@@ -166,9 +167,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Reply[]
+     * @return Collection|null
      */
-    public function getReplies(): Collection
+    public function getReplies(): ?Collection
     {
         return $this->replies;
     }

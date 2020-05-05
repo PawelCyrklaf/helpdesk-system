@@ -52,7 +52,7 @@ class Ticket
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="ticket")
      */
-    private ArrayCollection $replies;
+    private Collection $replies;
 
     public function __construct()
     {
@@ -113,9 +113,9 @@ class Ticket
     }
 
     /**
-     * @return Collection|Reply[]
+     * @return Collection|null
      */
-    public function getReplies(): Collection
+    public function getReplies(): ?Collection
     {
         return $this->replies;
     }

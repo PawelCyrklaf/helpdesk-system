@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReplyRepository")
@@ -31,6 +32,7 @@ class Reply
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ticket", inversedBy="replies")
+     * @Serializer\Exclude()
      */
     private Ticket $ticket;
 
