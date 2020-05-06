@@ -50,7 +50,7 @@ class Ticket
     private int $status;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="ticket")
+     * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="ticket", cascade={"persist", "remove"})
      */
     private Collection $replies;
 

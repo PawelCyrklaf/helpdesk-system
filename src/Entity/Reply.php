@@ -31,7 +31,7 @@ class Reply
     private User $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ticket", inversedBy="replies")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ticket", inversedBy="replies", cascade={"persist", "remove"})
      * @Serializer\Exclude()
      */
     private Ticket $ticket;
