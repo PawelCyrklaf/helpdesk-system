@@ -14,7 +14,7 @@ class RequestListener
         $content = $event->getRequest()->getContent();
 
         if ($method == Request::METHOD_POST || $method == Request::METHOD_PUT) {
-            if ($content == null || empty($content) || isset($content)) {
+            if ($content == null || empty($content) || !isset($content)) {
                 throw new BadRequestHttpException('Request body cannot be null');
             }
         }
