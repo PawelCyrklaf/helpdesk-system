@@ -36,10 +36,7 @@ class ReplyController extends AbstractFOSRestController
     public function add(Request $request, Ticket $ticket)
     {
         $this->denyAccessUnlessGranted('TICKET_ADD_REPLY', $ticket);
-
-        $replyData = json_decode($request->getContent(), true);
-        $user = $this->getUser();
-        $result = $this->replyService->add($replyData, $user, $ticket);
+        $result = $this->replyService->add($request, $this->getUser(), $ticket);
 
         if ($result instanceof Reply) {
             $replyEvent = new TicketReplyEvent($result->getTicket());
@@ -60,9 +57,7 @@ class ReplyController extends AbstractFOSRestController
     public function update(Request $request, Reply $reply)
     {
         $this->denyAccessUnlessGranted('REPLY_EDIT', $reply);
-
-        $replyData = json_decode($request->getContent(), true);
-        $result = $this->replyService->update($replyData, $reply);
+        $result = $this->replyService->update($request, $reply);
 
         if ($result) {
             return $this->view([], Response::HTTP_OK);

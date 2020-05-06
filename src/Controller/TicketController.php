@@ -13,12 +13,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TicketController extends AbstractFOSRestController
 {
     private TicketService $ticketService;
-
     private EventDispatcherInterface $dispatcher;
 
     public function __construct(
@@ -37,10 +35,7 @@ class TicketController extends AbstractFOSRestController
      */
     public function add(Request $request)
     {
-        $ticketData = json_decode($request->getContent(), true);
-        $user = $this->getUser();
-        $result = $this->ticketService->add($ticketData, $user);
-
+        $result = $this->ticketService->add($request, $this->getUser());
         if ($result instanceof Ticket) {
             $ticketEvent = new TicketCreatedEvent($result);
             $this->dispatcher->dispatch($ticketEvent, TicketCreatedEvent::class);
@@ -59,10 +54,7 @@ class TicketController extends AbstractFOSRestController
     public function update(Ticket $ticket, Request $request)
     {
         $this->denyAccessUnlessGranted('TICKET_EDIT', $ticket);
-
-        $ticketData = json_decode($request->getContent(), true);
-        $result = $this->ticketService->update($ticketData, $ticket);
-
+        $result = $this->ticketService->update($request, $ticket);
         if ($result) {
             return $this->view([], Response::HTTP_OK);
         }
@@ -78,7 +70,6 @@ class TicketController extends AbstractFOSRestController
     public function remove(Ticket $ticket)
     {
         $result = $this->ticketService->remove($ticket);
-
         if ($result) {
             return $this->view([], Response::HTTP_NO_CONTENT);
         }
@@ -110,26 +101,20 @@ class TicketController extends AbstractFOSRestController
     /**
      * @Rest\Put("/ticket/{id}/close")
      * @IsGranted("ROLE_ADMIN",message="Only administrator can close ticket.")
-     * @param Request $request
      * @param Ticket $ticket
      * @return View
      */
-    public function closeTicket(Request $request, Ticket $ticket)
+    public function closeTicket(Ticket $ticket)
     {
-        $ticketData = json_decode($request->getContent(), true);
-        $result = $this->ticketService->changeStatus($ticketData, $ticket);
-
+        $result = $this->ticketService->changeStatus($ticket);
         if ($result) {
             $status = $result->getStatus();
-
             if ($status === Ticket::SOLVED) {
                 $ticketEvent = new TicketClosedEvent($result);
                 $this->dispatcher->dispatch($ticketEvent, TicketClosedEvent::class);
             }
-
             return $this->view([], Response::HTTP_OK);
         }
         return $this->view(['error' => $result], Response::HTTP_BAD_REQUEST);
     }
-
 }

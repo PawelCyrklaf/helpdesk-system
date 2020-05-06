@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\Ticket;
-use App\Entity\User;
 use App\Repository\TicketRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +26,9 @@ class TicketService
         $this->paginator = $paginator;
     }
 
-    public function add(array $ticketData, $author)
+    public function add(Request $request, $author)
     {
+        $ticketData = json_decode($request->getContent(), true);
         $subject = $ticketData['subject'];
         $description = $ticketData['description'];
 
@@ -39,7 +39,6 @@ class TicketService
         $ticket->setStatus(Ticket::UNRESOLVED);
 
         $errors = $this->validator->validate($ticket);
-
         if (count($errors) > 0) {
             return (string)$errors;
         }
@@ -48,8 +47,9 @@ class TicketService
         return $ticket;
     }
 
-    public function update(array $ticketData, Ticket $ticket): Ticket
+    public function update(Request $request, Ticket $ticket): Ticket
     {
+        $ticketData = json_decode($request->getContent(), true);
         $subject = $ticketData['subject'];
         $description = $ticketData['description'];
 
@@ -76,11 +76,9 @@ class TicketService
         return $this->paginator->paginate($tickets, $request->query->getInt('page', 1), $request->query->getInt('limit', 10))->getItems();
     }
 
-    public function changeStatus(array $ticketData, Ticket $ticket): Ticket
+    public function changeStatus(Ticket $ticket): Ticket
     {
-        $status = $ticketData['status'];
-        $ticket->setStatus($status);
-
+        $ticket->setStatus(Ticket::SOLVED);
         $this->ticketRepository->update();
         return $ticket;
     }

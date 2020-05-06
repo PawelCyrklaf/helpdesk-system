@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Reply;
 use App\Entity\Ticket;
 use App\Repository\ReplyRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ReplyService
@@ -21,8 +22,9 @@ class ReplyService
         $this->validator = $validator;
     }
 
-    public function add(array $replyData, $author, Ticket $ticket)
+    public function add(Request $request, $author, Ticket $ticket)
     {
+        $replyData = json_decode($request->getContent(), true);
         $message = $replyData['message'];
 
         $reply = new Reply();
@@ -34,15 +36,14 @@ class ReplyService
         if (count($errors) > 0) {
             return (string)$errors;
         }
-
         $this->replyRepository->save($reply);
         return $reply;
     }
 
-    public function update(array $replyData, Reply $reply): Reply
+    public function update(Request $request, Reply $reply): Reply
     {
+        $replyData = json_decode($request->getContent(), true);
         $message = $replyData['message'];
-
         $reply->setMessage($message);
         $this->replyRepository->update();
 
