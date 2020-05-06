@@ -12,7 +12,6 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ReplyController extends AbstractFOSRestController
 {
@@ -37,9 +36,6 @@ class ReplyController extends AbstractFOSRestController
     public function add(Request $request, Ticket $ticket)
     {
         $this->denyAccessUnlessGranted('TICKET_ADD_REPLY', $ticket);
-        if ($request->getContent() == null) {
-            throw new BadRequestHttpException('Request body cannot be null');
-        }
 
         $replyData = json_decode($request->getContent(), true);
         $user = $this->getUser();
@@ -64,9 +60,6 @@ class ReplyController extends AbstractFOSRestController
     public function update(Request $request, Reply $reply)
     {
         $this->denyAccessUnlessGranted('REPLY_EDIT', $reply);
-        if ($request->getContent() == null) {
-            throw new BadRequestHttpException('Request body cannot be null');
-        }
 
         $replyData = json_decode($request->getContent(), true);
         $result = $this->replyService->update($replyData, $reply);

@@ -37,10 +37,6 @@ class TicketController extends AbstractFOSRestController
      */
     public function add(Request $request)
     {
-        if ($request->getContent() == null) {
-            throw new BadRequestHttpException('Request body cannot be null');
-        }
-
         $ticketData = json_decode($request->getContent(), true);
         $user = $this->getUser();
         $result = $this->ticketService->add($ticketData, $user);
@@ -63,9 +59,6 @@ class TicketController extends AbstractFOSRestController
     public function update(Ticket $ticket, Request $request)
     {
         $this->denyAccessUnlessGranted('TICKET_EDIT', $ticket);
-        if ($request->getContent() == null) {
-            throw new BadRequestHttpException('Request body cannot be null');
-        }
 
         $ticketData = json_decode($request->getContent(), true);
         $result = $this->ticketService->update($ticketData, $ticket);
@@ -123,10 +116,6 @@ class TicketController extends AbstractFOSRestController
      */
     public function closeTicket(Request $request, Ticket $ticket)
     {
-        if ($request->getContent() == null) {
-            throw new BadRequestHttpException('Request body cannot be null');
-        }
-
         $ticketData = json_decode($request->getContent(), true);
         $result = $this->ticketService->changeStatus($ticketData, $ticket);
 
