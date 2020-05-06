@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Event\TicketClosedEvent;
 use App\Event\TicketCreatedEvent;
+use App\Event\TicketReplyEvent;
 use App\Service\EmailTemplateService;
 use App\Service\MailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -22,6 +23,7 @@ final class TicketSubscriber implements EventSubscriberInterface
         return [
             TicketCreatedEvent::class => ['newTicket'],
             TicketClosedEvent::class => ['closedTicket'],
+            TicketReplyEvent::class => ['ticketReply'],
         ];
     }
 
@@ -39,6 +41,15 @@ final class TicketSubscriber implements EventSubscriberInterface
 
         if ($ticket) {
             $this->mailService->send($ticket, EmailTemplateService::TICKET_CLOSED_TEMPLATE);
+        }
+    }
+
+    public function ticketReply(TicketReplyEvent $ticketEvent): void
+    {
+        $ticket = $ticketEvent->getTicket();
+
+        if ($ticket) {
+            $this->mailService->send($ticket, EmailTemplateService::TICKET_REPLY_TEMPLATE);
         }
     }
 }

@@ -28,6 +28,9 @@ class MailService
             case EmailTemplateService::TICKET_CLOSED_TEMPLATE:
                 $this->mailer->send($this->emailTemplateService->getClosedTicketEmailTemplate($ticket));
                 break;
+            case EmailTemplateService::TICKET_REPLY_TEMPLATE:
+                $this->mailer->send($this->emailTemplateService->getNewReplyEmailTemplate($ticket));
+                break;
             default:
                 return false;
         }

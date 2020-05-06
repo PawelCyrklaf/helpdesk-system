@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reply;
 use App\Entity\Ticket;
+use App\Event\TicketReplyEvent;
 use App\Service\ReplyService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -45,6 +46,8 @@ class ReplyController extends AbstractFOSRestController
         $result = $this->replyService->add($replyData, $user, $ticket);
 
         if ($result instanceof Reply) {
+            $replyEvent = new TicketReplyEvent($result->getTicket());
+            $this->dispatcher->dispatch($replyEvent, TicketReplyEvent::class);
 
             return $this->view(['reply_id' => $result->getId()], Response::HTTP_OK);
         }
