@@ -27,25 +27,25 @@ class Ticket
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter subject")
      */
     private string $subject;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter description")
      */
     private string $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tickets")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter ticket author")
      */
     private User $author;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter ticket status")
      */
     private int $status;
 

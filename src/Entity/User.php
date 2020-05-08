@@ -7,11 +7,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email is already taken.")
  */
 class User implements UserInterface
 {
@@ -26,20 +28,20 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter name")
      */
     private string $name;
 
     /**
      * @ORM\Column(type="string", length=180, unique=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter surname")
      */
     private string $surname;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank(message="Please enter surname")
+     * @Assert\Email(message="Please enter email")
      */
     private string $email;
 
@@ -53,7 +55,7 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Serializer\Exclude()
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Please enter user password")
      */
     private string $password;
 
