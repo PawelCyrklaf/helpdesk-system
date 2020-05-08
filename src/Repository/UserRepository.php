@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Contracts\BaseRepositoryInterface;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, BaseRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -39,6 +40,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    public function save($object): void
+    {
+        $this->_em->persist($object);
+        $this->_em->flush();
+    }
+
+    public function remove($object): void
+    {
+        $this->_em->remove($object);
+        $this->_em->flush();
+    }
+
+    public function update(): void
+    {
         $this->_em->flush();
     }
 }
