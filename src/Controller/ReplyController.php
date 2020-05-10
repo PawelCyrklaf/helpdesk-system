@@ -56,7 +56,6 @@ class ReplyController extends AbstractFOSRestController
      */
     public function update(Request $request, Reply $reply)
     {
-        $this->denyAccessUnlessGranted('REPLY_EDIT', $reply);
         $result = $this->replyService->update($request, $reply);
 
         if ($result) {

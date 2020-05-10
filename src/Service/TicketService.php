@@ -6,6 +6,7 @@ use App\Entity\Ticket;
 use App\Repository\TicketRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -56,7 +57,14 @@ class TicketService
         $subject = $ticketData['subject'];
         $description = $ticketData['description'];
 
+        if (!$subject) {
+            throw new BadRequestHttpException('Subject cannot be empty!');
+        }
         $ticket->setSubject($subject);
+
+        if (!$description) {
+            throw new BadRequestHttpException('Description cannot be empty!');
+        }
         $ticket->setDescription($description);
 
         $this->ticketRepository->update();

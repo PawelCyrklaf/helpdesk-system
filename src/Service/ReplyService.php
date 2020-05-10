@@ -6,6 +6,7 @@ use App\Entity\Reply;
 use App\Entity\Ticket;
 use App\Repository\ReplyRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ReplyService
@@ -48,6 +49,11 @@ class ReplyService
     {
         $replyData = json_decode($request->getContent(), true);
         $message = $replyData['message'];
+
+        if (!$message) {
+            throw new BadRequestHttpException('Message cannot be empty!');
+        }
+
         $reply->setMessage($message);
         $this->replyRepository->update();
 
