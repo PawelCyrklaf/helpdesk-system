@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReplyRepository")
@@ -22,17 +23,20 @@ class Reply
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private string $message;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="replies")
+     * @Assert\NotBlank()
      */
     private User $author;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ticket", inversedBy="replies", cascade={"persist", "remove"})
      * @Serializer\Exclude()
+     * @Assert\NotBlank()
      */
     private Ticket $ticket;
 
