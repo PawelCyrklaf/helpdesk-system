@@ -60,14 +60,21 @@ class User implements UserInterface
     private string $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Reply", mappedBy="author", cascade={"remove"})
      * @Serializer\Exclude()
      */
     private Collection $replies;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="author", cascade={"remove"})
+     * @Serializer\Exclude()
+     */
+    private Collection $tickets;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
+        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): int
@@ -198,4 +205,22 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
+    /**
+     * @param ArrayCollection|Collection $tickets
+     */
+    public function setTickets($tickets): void
+    {
+        $this->tickets = $tickets;
+    }
+
+
 }
