@@ -14,16 +14,19 @@ class TicketService
     private TicketRepository $ticketRepository;
     private ValidatorInterface $validator;
     private PaginatorInterface $paginator;
+    private ErrorService $errorService;
 
     public function __construct(
         TicketRepository $ticketRepository,
         ValidatorInterface $validator,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        ErrorService $errorService
     )
     {
         $this->ticketRepository = $ticketRepository;
         $this->validator = $validator;
         $this->paginator = $paginator;
+        $this->errorService = $errorService;
     }
 
     public function add(Request $request, $author)
@@ -40,7 +43,7 @@ class TicketService
 
         $errors = $this->validator->validate($ticket);
         if (count($errors) > 0) {
-            return (string)$errors;
+            return $this->errorService->formatError($errors);
         }
 
         $this->ticketRepository->save($ticket);

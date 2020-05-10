@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -16,17 +15,20 @@ class UserService
     private ValidatorInterface $validator;
     private PaginatorInterface $paginator;
     private UserPasswordEncoderInterface $encoder;
+    private ErrorService $errorService;
 
     public function __construct(
         UserRepository $userRepository,
         ValidatorInterface $validator,
         PaginatorInterface $paginator,
-        UserPasswordEncoderInterface $encoder)
+        UserPasswordEncoderInterface $encoder,
+        ErrorService $errorService)
     {
         $this->userRepository = $userRepository;
         $this->validator = $validator;
         $this->paginator = $paginator;
         $this->encoder = $encoder;
+        $this->errorService = $errorService;
     }
 
     public function add(Request $request)
@@ -47,7 +49,7 @@ class UserService
 
         $errors = $this->validator->validate($user);
         if (count($errors) > 0) {
-            throw new BadRequestHttpException($errors);
+            return $this->errorService->formatError($errors);
         }
 
         $this->userRepository->save($user);

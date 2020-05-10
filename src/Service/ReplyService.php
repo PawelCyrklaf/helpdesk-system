@@ -12,14 +12,17 @@ class ReplyService
 {
     private ReplyRepository $replyRepository;
     private ValidatorInterface $validator;
+    private ErrorService $errorService;
 
     public function __construct(
         ReplyRepository $replyRepository,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        ErrorService $errorService
     )
     {
         $this->replyRepository = $replyRepository;
         $this->validator = $validator;
+        $this->errorService = $errorService;
     }
 
     public function add(Request $request, $author, Ticket $ticket)
@@ -34,8 +37,9 @@ class ReplyService
 
         $errors = $this->validator->validate($reply);
         if (count($errors) > 0) {
-            return (string)$errors;
+            return $this->errorService->formatError($errors);
         }
+
         $this->replyRepository->save($reply);
         return $reply;
     }
