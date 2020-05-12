@@ -7,6 +7,7 @@ use App\Service\UserService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -51,6 +52,7 @@ class UserController extends AbstractFOSRestController
     /**
      * @Rest\Delete("/user/{id}")
      * @param User $user
+     * @IsGranted("ROLE_ADMIN",message="Only administrator can remove user.")
      * @return bool|View
      */
     public function remove(User $user)
@@ -75,6 +77,7 @@ class UserController extends AbstractFOSRestController
     /**
      * @Rest\Get("/users")
      * @param Request $request
+     * @IsGranted("ROLE_ADMIN",message="Only administrator can get users list.")
      * @return View
      */
     public function list(Request $request)

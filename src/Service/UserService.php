@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -58,6 +59,26 @@ class UserService
 
     public function update(Request $request, User $user): User
     {
+        $userData = json_decode($request->getContent(), true);
+        $name = $userData['name'];
+        $surname = $userData['surname'];
+        $email = $userData['email'];
+
+        if (!$name) {
+            throw new BadRequestHttpException('Name cannot be empty!');
+        }
+        $user->setName($name);
+        if (!$surname) {
+            throw new BadRequestHttpException('Surname cannot be empty!');
+        }
+        $user->setSurname($surname);
+        if (!$email) {
+            throw new BadRequestHttpException('Email cannot be empty!');
+        }
+        $user->setEmail($email);
+
+        $this->userRepository->update();
+        return $user;
     }
 
     public function remove(User $user): bool
@@ -68,5 +89,7 @@ class UserService
 
     public function getUsers(Request $request): iterable
     {
+        $users = $this->userRepository->findAll();
+        return $this->paginator->paginate($users, $request->query->getInt('page', 1), $request->query->getInt('limit', 10))->getItems();
     }
 }
