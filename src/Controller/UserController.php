@@ -72,6 +72,7 @@ class UserController extends AbstractFOSRestController
      */
     public function details(User $user)
     {
+        $this->denyAccessUnlessGranted('USER_VIEW', $user);
         return $this->view($user, Response::HTTP_OK);
     }
 

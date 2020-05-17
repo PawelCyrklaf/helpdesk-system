@@ -10,7 +10,7 @@ class UserVoter extends Voter
 {
     protected function supports($attribute, $subject)
     {
-        return in_array($attribute, ['USER_EDIT'])
+        return in_array($attribute, ['USER_EDIT', 'USER_VIEW'])
             && $subject instanceof User;
     }
 
@@ -26,12 +26,24 @@ class UserVoter extends Voter
             case 'USER_EDIT':
                 return $this->canEdit($user, $userData);
                 break;
+            case 'USER_VIEW':
+                return $this->canView($user, $userData);
+                break;
         }
 
         return false;
     }
 
     public function canEdit(User $user, User $userData)
+    {
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return true;
+        } else {
+            return $user === $userData;
+        }
+    }
+
+    public function canView(User $user, User $userData)
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return true;
