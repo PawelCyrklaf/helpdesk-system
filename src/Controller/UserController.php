@@ -42,6 +42,7 @@ class UserController extends AbstractFOSRestController
      */
     public function update(Request $request, User $user)
     {
+        $this->denyAccessUnlessGranted('USER_EDIT', $user);
         $result = $this->userService->update($request, $user);
         if ($result) {
             return $this->view([], Response::HTTP_OK);
