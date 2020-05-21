@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Repository\TicketRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,19 +18,22 @@ class UserService
     private PaginatorInterface $paginator;
     private UserPasswordEncoderInterface $encoder;
     private ErrorService $errorService;
+    private TicketRepository $ticketRepository;
 
     public function __construct(
         UserRepository $userRepository,
         ValidatorInterface $validator,
         PaginatorInterface $paginator,
         UserPasswordEncoderInterface $encoder,
-        ErrorService $errorService)
+        ErrorService $errorService,
+        TicketRepository $ticketRepository)
     {
         $this->userRepository = $userRepository;
         $this->validator = $validator;
         $this->paginator = $paginator;
         $this->encoder = $encoder;
         $this->errorService = $errorService;
+        $this->ticketRepository = $ticketRepository;
     }
 
     public function add(Request $request)
@@ -91,5 +95,11 @@ class UserService
     {
         $users = $this->userRepository->findAll();
         return $this->paginator->paginate($users, $request->query->getInt('page', 1), $request->query->getInt('limit', 10))->getItems();
+    }
+
+    public function getUserTickets(User $user, Request $request): iterable
+    {
+        $tickets = $this->ticketRepository->findBy(array('author' => $user));
+        return $this->paginator->paginate($tickets, $request->query->getInt('page', 1), $request->query->getInt('limit', 10))->getItems();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Service\TicketService;
 use App\Service\UserService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -14,10 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends AbstractFOSRestController
 {
     private UserService $userService;
+    private TicketService $ticketService;
 
-    public function __construct(UserService $userService)
+    public function __construct(
+        UserService $userService,
+        TicketService $ticketService)
     {
         $this->userService = $userService;
+        $this->ticketService = $ticketService;
     }
 
     /**
@@ -86,5 +91,18 @@ class UserController extends AbstractFOSRestController
     {
         $users = $this->userService->getUsers($request);
         return $this->view($users, Response::HTTP_OK);
+    }
+
+    /**
+     * @Rest\Get("/user/{id}/tickets")
+     * @param User $user
+     * @param Request $request
+     * @IsGranted("ROLE_ADMIN",message="Only administrator can get user tickets list.")
+     * @return View
+     */
+    public function userTickets(User $user, Request $request)
+    {
+        $tickets = $this->userService->getUserTickets($user, $request);
+        return $this->view($tickets, Response::HTTP_OK);
     }
 }
