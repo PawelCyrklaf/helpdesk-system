@@ -59,4 +59,10 @@ class ReplyService
 
         return $reply;
     }
+
+    public function remove(Reply $reply): bool
+    {
+        $this->replyRepository->remove($reply);
+        return true;
+    }
 }
