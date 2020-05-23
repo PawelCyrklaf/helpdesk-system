@@ -9,10 +9,12 @@ use App\Service\TicketService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as SWG;
 
 class TicketController extends AbstractFOSRestController
 {
@@ -32,6 +34,43 @@ class TicketController extends AbstractFOSRestController
      * @Rest\Post("/ticket")
      * @param Request $request
      * @return View
+     * @SWG\Post(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     tags={"Ticket"},
+     *     summary="Add new ticket",
+     *     @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     *     @SWG\Parameter(
+     *       name="body",
+     *       in="body",
+     *       description="JSON ticket object",
+     *       type="json",
+     *       required=true,
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(property="subject", type="string", example="Example subject"),
+     *              @SWG\Property(property="description", type="string", example="Example ticket description"),
+     *          )
+     *)
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns new ticket id",
+     *     @SWG\Schema(
+     *     @SWG\Property(property="ticket_id", type="integer", example="1"),
+     * )
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
      */
     public function add(Request $request)
     {
@@ -50,6 +89,51 @@ class TicketController extends AbstractFOSRestController
      * @param Request $request
      * @param Ticket $ticket
      * @return View
+     * @SWG\Put(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Update existing ticket",
+     *     tags={"Ticket"},
+     *     @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *         description="Ticket id"
+     *     ),
+     *     @SWG\Parameter(
+     *       name="body",
+     *       in="body",
+     *       description="JSON ticket object",
+     *       type="json",
+     *       required=true,
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(property="subject", type="string", example="Example subject"),
+     *              @SWG\Property(property="description", type="string", example="Example ticket description"),
+     *          )
+     *)
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns success status"
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
+     * @SWG\Response(
+     *         response=404,
+     *         description="Ticket not found",
+     *     )
      */
     public function update(Ticket $ticket, Request $request)
     {
@@ -66,6 +150,39 @@ class TicketController extends AbstractFOSRestController
      * @IsGranted("ROLE_ADMIN",message="Only administrator can remove ticket.")
      * @param Ticket $ticket
      * @return bool|View
+     * @SWG\Delete(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Delete existing ticket",
+     *     tags={"Ticket"},
+     * @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     * @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *         description="Ticket id"
+     *     )
+     * )
+     * @SWG\Response(
+     *         response=204,
+     *         description="Returns success status"
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
+     * @SWG\Response(
+     *         response=404,
+     *         description="Ticket not found",
+     *     )
      */
     public function remove(Ticket $ticket)
     {
@@ -80,6 +197,40 @@ class TicketController extends AbstractFOSRestController
      * @Rest\Get("/ticket/{id}")
      * @param Ticket $ticket
      * @return View
+     * @SWG\Get(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Get existing ticket details",
+     *     tags={"Ticket"},
+     * @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     * @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *         description="Ticket id"
+     *     )
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns ticket details",
+     *          @Model(type=Ticket::class)
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     ),
+     * @SWG\Response(
+     *         response=404,
+     *         description="Ticket not found",
+     *     )
      */
     public function details(Ticket $ticket)
     {
@@ -91,6 +242,39 @@ class TicketController extends AbstractFOSRestController
      * @Rest\Get("/tickets")
      * @param Request $request
      * @return View
+     * @SWG\Get(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Get existing ticket details",
+     *     tags={"Ticket"},
+     * @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     * @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *         description="Ticket id"
+     *     )
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns tickets list",
+     *     @SWG\Schema(
+     *     type="array",
+     *     @Model(type=Ticket::class)
+     * )
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
      */
     public function list(Request $request)
     {
@@ -103,6 +287,50 @@ class TicketController extends AbstractFOSRestController
      * @IsGranted("ROLE_ADMIN",message="Only administrator can close ticket.")
      * @param Ticket $ticket
      * @return View
+     * @SWG\Put(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Close existing ticket",
+     *     tags={"Ticket"},
+     *     @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *         description="Ticket id"
+     *     ),
+     *     @SWG\Parameter(
+     *       name="body",
+     *       in="body",
+     *       description="JSON ticket object",
+     *       type="json",
+     *       required=true,
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(property="status", type="integer", example="1"),
+     *          )
+     *)
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns success status"
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
+     * @SWG\Response(
+     *         response=404,
+     *         description="Ticket not found",
+     *     )
      */
     public function closeTicket(Ticket $ticket)
     {

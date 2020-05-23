@@ -2,8 +2,8 @@ nelmio_api_doc:
     documentation:
         #        schemes: [http, https]
         info:
-            title: Symfony JWT API
-            description: Symfony JWT API docs
+            title: Help Desk System API
+            description: Help Desk System API docs
             version: 1.0.0
         securityDefinitions:
             Bearer:
