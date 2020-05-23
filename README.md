@@ -1,7 +1,7 @@
 # HelpDesk System API
 
 The Help Desk system is a system created in the Symfony 4 RESTful API, whose task is to support the operation of support. The system is to help the customer report a problem, e.g. problems with the order or the operation of services.
-
+![swagger image](https://cyrklaf.eu/swagger.png)
 ## Backend technology
 1.  Symfony 4.4
 2.  PHP 7.4 on Nginx server
