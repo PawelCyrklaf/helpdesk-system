@@ -8,9 +8,11 @@ use App\Service\UserService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as SWG;
 
 class UserController extends AbstractFOSRestController
 {
@@ -29,6 +31,37 @@ class UserController extends AbstractFOSRestController
      * @Rest\Post("/user")
      * @param Request $request
      * @return View
+     * @SWG\Post(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     tags={"User"},
+     *     summary="Add new user",
+     *     @SWG\Parameter(
+     *       name="body",
+     *       in="body",
+     *       description="JSON user object",
+     *       type="json",
+     *       required=true,
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(property="name", type="string", example="Lorem"),
+     *              @SWG\Property(property="surname", type="string", example="Ipsum"),
+     *              @SWG\Property(property="email", type="string", example="lorem.ipsum@example.com"),
+     *              @SWG\Property(property="password", type="string", example="Lorem1234")
+     *                 )
+     *)
+     * ),
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns new user id",
+     *     @SWG\Schema(
+     *     @SWG\Property(property="user_id", type="integer", example="1"),
+     * )
+     * )
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
      */
     public function add(Request $request)
     {
@@ -44,6 +77,48 @@ class UserController extends AbstractFOSRestController
      * @param Request $request
      * @param User $user
      * @return View
+     * @SWG\Put(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     tags={"User"},
+     *     summary="Update existing user",
+     *     @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="string",
+     *         description="User id"
+     *     ),
+     *     @SWG\Parameter(
+     *       name="body",
+     *       in="body",
+     *       description="JSON user object",
+     *       type="json",
+     *       required=true,
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(property="name", type="string", example="Lorem"),
+     *              @SWG\Property(property="surname", type="string", example="Ipsum"),
+     *              @SWG\Property(property="email", type="string", example="lorem.ipsum@example.com")
+     *                 )
+     *)
+     * ),
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns success status"
+     * )
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
      */
     public function update(Request $request, User $user)
     {
@@ -60,6 +135,39 @@ class UserController extends AbstractFOSRestController
      * @param User $user
      * @IsGranted("ROLE_ADMIN",message="Only administrator can remove user.")
      * @return bool|View
+     * @SWG\Delete(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Delete existing user",
+     *     tags={"User"},
+     * @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     * @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *         description="User id"
+     *     )
+     * )
+     * @SWG\Response(
+     *         response=204,
+     *         description="Returns success status"
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
+     * @SWG\Response(
+     *         response=404,
+     *         description="User not found",
+     *     )
      */
     public function remove(User $user)
     {
@@ -74,6 +182,40 @@ class UserController extends AbstractFOSRestController
      * @Rest\Get("/user/{id}")
      * @param User $user
      * @return View
+     * @SWG\Get(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Get existing user details",
+     *     tags={"User"},
+     * @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     * @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *         description="User id"
+     *     )
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns user details",
+     *          @Model(type=User::class)
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     ),
+     * @SWG\Response(
+     *         response=404,
+     *         description="User not found",
+     *     )
      */
     public function details(User $user)
     {
@@ -86,6 +228,32 @@ class UserController extends AbstractFOSRestController
      * @param Request $request
      * @IsGranted("ROLE_ADMIN",message="Only administrator can get users list.")
      * @return View
+     * @SWG\Get(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Get users lists",
+     *     tags={"User"},
+     * @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns users list",
+     *     @SWG\Schema(
+     *     type="array",
+     *     @Model(type=User::class)
+     * )
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
      */
     public function list(Request $request)
     {
@@ -99,6 +267,39 @@ class UserController extends AbstractFOSRestController
      * @param Request $request
      * @IsGranted("ROLE_ADMIN",message="Only administrator can get user tickets list.")
      * @return View
+     * @SWG\Get(
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     summary="Get user tickets",
+     *     tags={"User"},
+     * @SWG\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         default="Bearer TOKEN",
+     *         description="Authorization"
+     *     ),
+     * @SWG\Parameter(
+     *         name="id",
+     *         in="header",
+     *         required=true,
+     *         type="string",
+     *         description="User id"
+     *     ),
+     * )
+     * @SWG\Response(
+     *         response=200,
+     *         description="Returns users ticket",
+     *     @SWG\Schema(
+     *     type="array",
+     *     @Model(type=Ticket::class)
+     * )
+     *     ),
+     * @SWG\Response(
+     *         response=401,
+     *         description="Expired JWT Token | JWT Token not found | Invalid JWT Token",
+     *     )
      */
     public function userTickets(User $user, Request $request)
     {

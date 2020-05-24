@@ -245,7 +245,7 @@ class TicketController extends AbstractFOSRestController
      * @SWG\Get(
      *     consumes={"application/json"},
      *     produces={"application/json"},
-     *     summary="Get existing ticket details",
+     *     summary="Get tickets list",
      *     tags={"Ticket"},
      * @SWG\Parameter(
      *         name="Authorization",
@@ -254,13 +254,6 @@ class TicketController extends AbstractFOSRestController
      *         type="string",
      *         default="Bearer TOKEN",
      *         description="Authorization"
-     *     ),
-     * @SWG\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         type="integer",
-     *         description="Ticket id"
      *     )
      * )
      * @SWG\Response(
