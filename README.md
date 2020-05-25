@@ -55,7 +55,20 @@ After downloading the repository, create an .env file in the application's root 
 After creating the .env file, execute the command
 
     $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:fixtures:load
 
+
+Default admin credential is:  
+
+    username: admin@example.com  
+    password: admin123  
+
+  
+Default user credential is:  
+
+    username: user@example.com  
+    password: user123
+    
 ## API documentation
 The API includes documented all available routings. After starting, just go to the address e.g. http://localhost:8000/api/doc where a detailed description of each API routing will be available.
 
