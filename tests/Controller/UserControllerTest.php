@@ -53,15 +53,37 @@ class UserControllerTest extends WebTestCase
             json_encode(array(
                 'name' => "lorem",
                 'surname' => "ipsum",
-                'email' => 'pawelaa@example.com',
-                'password' => 'qwerty123'
+                'email' => 'admin@example.com',
+                'password' => 'admin123'
             ))
         );
 
         $response = $this->client->getResponse();
         $responseData = json_decode($response->getContent(), true);
 
+        $this->assertNotEmpty($responseData['user_id']);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(1, $responseData['user_id']);
+    }
+
+    public function testLogin()
+    {
+        $this->client->request(
+            'POST',
+            '/api/login_check',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            json_encode(array(
+                '_username' => 'admin@example.com',
+                '_password' => 'admin123'
+            ))
+        );
+
+        $response = $this->client->getResponse();
+        $responseData = json_decode($response->getContent(), true);
+
+        $this->assertNotEmpty($responseData['token']);
+        $this->assertNotEmpty($responseData['refresh_token']);
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }
