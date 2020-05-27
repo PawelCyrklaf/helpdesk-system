@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "dama/doctrine-test-bundle": "^6.3",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.7",
         "friendsofsymfony/elastica-bundle": "^5.1",
