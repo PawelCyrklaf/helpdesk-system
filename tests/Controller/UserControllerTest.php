@@ -42,6 +42,23 @@ class UserControllerTest extends WebTestCase
         return $client;
     }
 
+    public function createDummyUser()
+    {
+        $this->client->request(
+            'POST',
+            '/api/user',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            json_encode(array(
+                'name' => "lorem",
+                'surname' => "ipsum",
+                'email' => 'admin@example.com',
+                'password' => 'admin123'
+            ))
+        );
+    }
+
     public function testAdd()
     {
         $this->client->request(
@@ -67,6 +84,7 @@ class UserControllerTest extends WebTestCase
 
     public function testLogin()
     {
+        $this->createDummyUser();
         $this->client->request(
             'POST',
             '/api/login_check',
