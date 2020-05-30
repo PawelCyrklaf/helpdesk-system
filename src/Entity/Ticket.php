@@ -15,6 +15,8 @@ class Ticket
 {
     public const UNRESOLVED = 0;
     public const SOLVED = 1;
+    public const CUSTOMER_REPLY = 2;
+    public const SUPPORT_REPLY = 3;
 
     use TimestampableEntity;
 

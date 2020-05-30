@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Reply;
 use App\Entity\Ticket;
 use App\Repository\ReplyRepository;
+use App\Repository\TicketRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -14,16 +15,19 @@ class ReplyService
     private ReplyRepository $replyRepository;
     private ValidatorInterface $validator;
     private ErrorService $errorService;
+    private TicketRepository $ticketRepository;
 
     public function __construct(
         ReplyRepository $replyRepository,
         ValidatorInterface $validator,
-        ErrorService $errorService
+        ErrorService $errorService,
+        TicketRepository $ticketRepository
     )
     {
         $this->replyRepository = $replyRepository;
         $this->validator = $validator;
         $this->errorService = $errorService;
+        $this->ticketRepository = $ticketRepository;
     }
 
     public function add(Request $request, $author, Ticket $ticket)
@@ -41,6 +45,13 @@ class ReplyService
             return $this->errorService->formatError($errors);
         }
 
+        if (in_array('ROLE_ADMIN', $author->getRoles())) {
+            $ticket->setStatus(Ticket::SUPPORT_REPLY);
+        } else {
+            $ticket->setStatus(Ticket::CUSTOMER_REPLY);
+        }
+
+        $this->ticketRepository->update();
         $this->replyRepository->save($reply);
         return $reply;
     }
