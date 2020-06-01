@@ -43,6 +43,8 @@ class UserService
         $surname = $userData['surname'];
         $email = $userData['email'];
         $password = $userData['password'];
+        $phoneNumber = $userData['phoneNumber'];
+
 
         $user = new User();
         $user->setName($name);
@@ -51,7 +53,7 @@ class UserService
         $encodedPassword = $this->encoder->encodePassword($user, $password);
         $user->setPassword($encodedPassword);
         $user->setRoles(array('ROLE_ADMIN'));
-
+        $user->setPhoneNumber($phoneNumber);
         $errors = $this->validator->validate($user);
         if (count($errors) > 0) {
             return $this->errorService->formatError($errors);

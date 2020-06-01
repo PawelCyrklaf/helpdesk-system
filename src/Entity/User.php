@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email is already taken.")
- * @UniqueEntity(fields="phone_number", message="Phone is already taken.")
+ * @UniqueEntity(fields="phoneNumber", message="Phone is already taken.")
  */
 class User implements UserInterface
 {
@@ -73,7 +73,7 @@ class User implements UserInterface
     private Collection $tickets;
 
     /**
-     * @ORM\Column(name="phone_number", type="string", length=9, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=9, nullable=false, unique=true)
      * @Assert\NotBlank(message="Please enter phone number")
      */
     private string $phoneNumber;

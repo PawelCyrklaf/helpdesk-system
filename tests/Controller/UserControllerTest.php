@@ -54,7 +54,8 @@ class UserControllerTest extends WebTestCase
                 'name' => "lorem",
                 'surname' => "ipsum",
                 'email' => 'admin@example.com',
-                'password' => 'admin123'
+                'password' => 'admin123',
+                'phoneNumber' => '999999999'
             ))
         );
     }
@@ -71,13 +72,13 @@ class UserControllerTest extends WebTestCase
                 'name' => "lorem",
                 'surname' => "ipsum",
                 'email' => 'admin@example.com',
-                'password' => 'admin123'
+                'password' => 'admin123',
+                'phoneNumber' => '666666666'
             ))
         );
 
         $response = $this->client->getResponse();
         $responseData = json_decode($response->getContent(), true);
-
         $this->assertNotEmpty($responseData['user_id']);
         $this->assertEquals(200, $response->getStatusCode());
     }
