@@ -25,6 +25,7 @@ class UserFixtures extends Fixture
         $user->setEmail("user@example.com");
         $encodedPassword = $this->encoder->encodePassword($user, "user123");
         $user->setPassword($encodedPassword);
+        $user->setPhoneNumber("987654321");
 
         $manager->persist($user);
 
@@ -36,6 +37,7 @@ class UserFixtures extends Fixture
         $encodedPassword = $this->encoder->encodePassword($admin, "admin123");
         $admin->setPassword($encodedPassword);
         $admin->setRoles(array('ROLE_ADMIN'));
+        $admin->setPhoneNumber("123456789");
 
         $manager->persist($admin);
 
