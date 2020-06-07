@@ -1,4 +1,8 @@
-<h3>Hello {{ ticket.author.email }}!</h3>
-<p>
-    Your ticket with id {{ ticket.id }} has been added and waiting for response.
-</p>
+<h3 style="color: #0066cc;">Hello {{ ticket.author.email }}!</h3>
+<p style="color:#555555;">Your ticket with id {{ ticket.id }} has been added and waiting for response.</p>
+<p style="color:#555555;">Ticket details: </p>
+<ul style="color:#555555;">
+    <li>Id: {{ ticket.id }}</li>
+    <li>Subject: {{ ticket.subject }}</li>
+</ul>
+<p>Regards Support Team</p>
