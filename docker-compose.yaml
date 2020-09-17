@@ -6,10 +6,10 @@ services:
     image: mariadb:10.5
     restart: on-failure
     environment:
-      MYSQL_ROOT_PASSWORD: pawel
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: pawel
-      MYSQL_PASSWORD: pawel
-      MYSQL_DATABASE: helpdesk
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
     - 3306:3306
 
