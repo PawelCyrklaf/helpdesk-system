@@ -83,6 +83,12 @@ Default admin credential is:
 
 Default user credential is:    
  username: user@example.com    password: user123  
+ ## Planned features
+1. Adding support packages and integration with payment systems, eg PayPal
+2. SMS notification
+3. General chat for employees
+4. Adding attachments to tickets
+
   ## API documentation  
 The API includes documented all available routings. After starting, just go to the address e.g. http://localhost:8000/api/doc where a detailed description of each API routing will be available.  
   
