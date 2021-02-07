@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Ticket;
 use App\Repository\TicketRepository;
+use App\Utils\ErrorFormatter;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -15,19 +16,19 @@ class TicketService
     private TicketRepository $ticketRepository;
     private ValidatorInterface $validator;
     private PaginatorInterface $paginator;
-    private ErrorService $errorService;
+    private ErrorFormatter $errorFormatter;
 
     public function __construct(
         TicketRepository $ticketRepository,
         ValidatorInterface $validator,
         PaginatorInterface $paginator,
-        ErrorService $errorService
+        ErrorFormatter $errorFormatter
     )
     {
         $this->ticketRepository = $ticketRepository;
         $this->validator = $validator;
         $this->paginator = $paginator;
-        $this->errorService = $errorService;
+        $this->errorFormatter = $errorFormatter;
     }
 
     public function add(Request $request, $author)
@@ -44,7 +45,7 @@ class TicketService
 
         $errors = $this->validator->validate($ticket);
         if (count($errors) > 0) {
-            return $this->errorService->formatError($errors);
+            return $this->errorFormatter->formatError($errors);
         }
 
         $this->ticketRepository->save($ticket);

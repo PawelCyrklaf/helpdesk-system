@@ -6,6 +6,7 @@ use App\Entity\Reply;
 use App\Entity\Ticket;
 use App\Repository\ReplyRepository;
 use App\Repository\TicketRepository;
+use App\Utils\ErrorFormatter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -14,19 +15,19 @@ class ReplyService
 {
     private ReplyRepository $replyRepository;
     private ValidatorInterface $validator;
-    private ErrorService $errorService;
+    private ErrorFormatter $errorFormatter;
     private TicketRepository $ticketRepository;
 
     public function __construct(
         ReplyRepository $replyRepository,
         ValidatorInterface $validator,
-        ErrorService $errorService,
+        ErrorFormatter $errorFormatter,
         TicketRepository $ticketRepository
     )
     {
         $this->replyRepository = $replyRepository;
         $this->validator = $validator;
-        $this->errorService = $errorService;
+        $this->errorFormatter = $errorFormatter;
         $this->ticketRepository = $ticketRepository;
     }
 
@@ -42,7 +43,7 @@ class ReplyService
 
         $errors = $this->validator->validate($reply);
         if (count($errors) > 0) {
-            return $this->errorService->formatError($errors);
+            return $this->errorFormatter->formatError($errors);
         }
 
         if (in_array('ROLE_ADMIN', $author->getRoles())) {

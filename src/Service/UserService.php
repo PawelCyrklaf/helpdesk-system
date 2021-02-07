@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use App\Repository\TicketRepository;
 use App\Repository\UserRepository;
+use App\Utils\ErrorFormatter;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -17,7 +18,7 @@ class UserService
     private ValidatorInterface $validator;
     private PaginatorInterface $paginator;
     private UserPasswordEncoderInterface $encoder;
-    private ErrorService $errorService;
+    private ErrorFormatter $errorFormatter;
     private TicketRepository $ticketRepository;
 
     public function __construct(
@@ -25,14 +26,14 @@ class UserService
         ValidatorInterface $validator,
         PaginatorInterface $paginator,
         UserPasswordEncoderInterface $encoder,
-        ErrorService $errorService,
+        ErrorFormatter $errorFormatter,
         TicketRepository $ticketRepository)
     {
         $this->userRepository = $userRepository;
         $this->validator = $validator;
         $this->paginator = $paginator;
         $this->encoder = $encoder;
-        $this->errorService = $errorService;
+        $this->errorFormatter = $errorFormatter;
         $this->ticketRepository = $ticketRepository;
     }
 
@@ -55,8 +56,9 @@ class UserService
         $user->setRoles(array('ROLE_ADMIN'));
         $user->setPhoneNumber($phoneNumber);
         $errors = $this->validator->validate($user);
+
         if (count($errors) > 0) {
-            return $this->errorService->formatError($errors);
+            return $this->errorFormatter->formatError($errors);
         }
 
         $this->userRepository->save($user);
