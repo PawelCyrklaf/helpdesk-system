@@ -44,7 +44,7 @@ class TicketService
         $ticket->setStatus(Ticket::UNRESOLVED);
 
         $errors = $this->validator->validate($ticket);
-        if (count($errors) > 0) {
+        if ($errors->count() > 0) {
             return $this->errorFormatter->formatError($errors);
         }
 

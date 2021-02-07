@@ -57,7 +57,7 @@ class UserService
         $user->setPhoneNumber($phoneNumber);
         $errors = $this->validator->validate($user);
 
-        if (count($errors) > 0) {
+        if ($errors->count() > 0) {
             return $this->errorFormatter->formatError($errors);
         }
 

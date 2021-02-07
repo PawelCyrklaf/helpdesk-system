@@ -42,7 +42,7 @@ class ReplyService
         $reply->setTicket($ticket);
 
         $errors = $this->validator->validate($reply);
-        if (count($errors) > 0) {
+        if ($errors->count() > 0) {
             return $this->errorFormatter->formatError($errors);
         }
 
