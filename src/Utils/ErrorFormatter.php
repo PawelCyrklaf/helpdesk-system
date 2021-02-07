@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Utils;
 
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class ErrorService
+class ErrorFormatter
 {
     public function formatError(ConstraintViolationListInterface $errors): array
     {
