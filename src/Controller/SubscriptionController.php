@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Subscription;
 use App\Service\SubscriptionService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 
 class SubscriptionController extends AbstractFOSRestController
