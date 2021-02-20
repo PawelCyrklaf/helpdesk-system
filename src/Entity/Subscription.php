@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SubscriptionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -44,6 +46,16 @@ class Subscription
      * @Assert\NotBlank(message="Please enter subscription duration")
      */
     private int $duration;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="subscription")
+     */
+    private $payments;
+
+    public function __construct()
+    {
+        $this->payments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -94,6 +106,37 @@ class Subscription
     public function setDuration(int $duration): self
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payments->contains($payment)) {
+            $this->payments->removeElement($payment);
+            // set the owning side to null (unless already changed)
+            if ($payment->getSubscription() === $this) {
+                $payment->setSubscription(null);
+            }
+        }
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Payment;
 use App\Service\PaymentService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
