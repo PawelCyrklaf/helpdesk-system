@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e4b42ddc76c83ecc7a426a5991d5e8e",
+    "content-hash": "035def50864c79a3cbe691fdedabbb01",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -454,16 +454,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "57815c7bbcda3cd18871d253c1dd8cbe56f8526e"
+                "reference": "b4bd1cfbd2b916951696d82e57d054394d84864c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/57815c7bbcda3cd18871d253c1dd8cbe56f8526e",
-                "reference": "57815c7bbcda3cd18871d253c1dd8cbe56f8526e",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/b4bd1cfbd2b916951696d82e57d054394d84864c",
+                "reference": "b4bd1cfbd2b916951696d82e57d054394d84864c",
                 "shasum": ""
             },
             "require": {
@@ -479,9 +479,9 @@
                 "doctrine/coding-standard": "11.1.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2022.3",
-                "phpstan/phpstan": "1.10.3",
+                "phpstan/phpstan": "1.10.9",
                 "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "9.6.4",
+                "phpunit/phpunit": "9.6.6",
                 "psalm/plugin-phpunit": "0.18.4",
                 "squizlabs/php_codesniffer": "3.7.2",
                 "symfony/cache": "^5.4|^6.0",
@@ -546,7 +546,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.6.1"
+                "source": "https://github.com/doctrine/dbal/tree/3.6.2"
             },
             "funding": [
                 {
@@ -562,7 +562,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-02T19:26:24+00:00"
+            "time": "2023-04-14T07:25:38+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1059,16 +1059,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.14.1",
+            "version": "2.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "de7eee5ed7b1b35c99b118f26f210a8281e6db8e"
+                "reference": "e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/de7eee5ed7b1b35c99b118f26f210a8281e6db8e",
-                "reference": "de7eee5ed7b1b35c99b118f26f210a8281e6db8e",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52",
+                "reference": "e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52",
                 "shasum": ""
             },
             "require": {
@@ -1097,14 +1097,14 @@
                 "doctrine/annotations": "^1.13 || ^2",
                 "doctrine/coding-standard": "^9.0.2 || ^11.0",
                 "phpbench/phpbench": "^0.16.10 || ^1.0",
-                "phpstan/phpstan": "~1.4.10 || 1.9.8",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "phpstan/phpstan": "~1.4.10 || 1.10.6",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6",
                 "psr/log": "^1 || ^2 || ^3",
-                "squizlabs/php_codesniffer": "3.7.1",
+                "squizlabs/php_codesniffer": "3.7.2",
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0",
                 "symfony/var-exporter": "^4.4 || ^5.4 || ^6.2",
                 "symfony/yaml": "^3.4 || ^4.0 || ^5.0 || ^6.0",
-                "vimeo/psalm": "4.30.0 || 5.4.0"
+                "vimeo/psalm": "4.30.0 || 5.9.0"
             },
             "suggest": {
                 "ext-dom": "Provides support for XSD validation for XML mapping files",
@@ -1154,9 +1154,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.14.1"
+                "source": "https://github.com/doctrine/orm/tree/2.14.2"
             },
-            "time": "2023-01-16T18:36:59+00:00"
+            "time": "2023-03-30T15:18:54+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2623,92 +2623,6 @@
             "time": "2023-02-13T12:30:12+00:00"
         },
         {
-            "name": "monolog/monolog",
-            "version": "1.27.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/904713c5929655dc9b97288b69cfeedad610c9a1",
-                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "psr/log": "~1.0"
-            },
-            "provide": {
-                "psr/log-implementation": "1.0.0"
-            },
-            "require-dev": {
-                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
-                "doctrine/couchdb": "~1.0@dev",
-                "graylog2/gelf-php": "~1.0",
-                "php-amqplib/php-amqplib": "~2.4",
-                "php-console/php-console": "^3.1.3",
-                "phpstan/phpstan": "^0.12.59",
-                "phpunit/phpunit": "~4.5",
-                "ruflin/elastica": ">=0.90 <3.0",
-                "sentry/sentry": "^0.13",
-                "swiftmailer/swiftmailer": "^5.3|^6.0"
-            },
-            "suggest": {
-                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
-                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
-                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
-                "ext-mongo": "Allow sending log messages to a MongoDB server",
-                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
-                "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
-                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
-                "php-console/php-console": "Allow sending log messages to Google Chrome",
-                "rollbar/rollbar": "Allow sending log messages to Rollbar",
-                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-                "sentry/sentry": "Allow sending log messages to a Sentry server"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Monolog\\": "src/Monolog"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
-                }
-            ],
-            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
-            "homepage": "http://github.com/Seldaek/monolog",
-            "keywords": [
-                "log",
-                "logging",
-                "psr-3"
-            ],
-            "support": {
-                "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/1.27.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/Seldaek",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/monolog/monolog",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-06-09T08:53:42+00:00"
-        },
-        {
             "name": "namshi/jose",
             "version": "7.2.3",
             "source": {
@@ -3199,16 +3113,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.17.1",
+            "version": "1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "d3753fcb3abc6f78f5de6f72153d4b9c99c72dee"
+                "reference": "22dcdfd725ddf99583bfe398fc624ad6c5004a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/d3753fcb3abc6f78f5de6f72153d4b9c99c72dee",
-                "reference": "d3753fcb3abc6f78f5de6f72153d4b9c99c72dee",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/22dcdfd725ddf99583bfe398fc624ad6c5004a0f",
+                "reference": "22dcdfd725ddf99583bfe398fc624ad6c5004a0f",
                 "shasum": ""
             },
             "require": {
@@ -3238,9 +3152,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.17.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.18.1"
             },
-            "time": "2023-04-04T11:11:22+00:00"
+            "time": "2023-04-07T11:51:11+00:00"
         },
         {
             "name": "psr/cache",
@@ -5607,167 +5521,6 @@
                 }
             ],
             "time": "2022-10-03T15:15:11+00:00"
-        },
-        {
-            "name": "symfony/monolog-bridge",
-            "version": "v4.4.43",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/monolog-bridge.git",
-                "reference": "ad09c9980b912e757c4ecd8363cebf3039d1d471"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/monolog-bridge/zipball/ad09c9980b912e757c4ecd8363cebf3039d1d471",
-                "reference": "ad09c9980b912e757c4ecd8363cebf3039d1d471",
-                "shasum": ""
-            },
-            "require": {
-                "monolog/monolog": "^1.25.1",
-                "php": ">=7.1.3",
-                "symfony/http-kernel": "^4.3",
-                "symfony/polyfill-php80": "^1.16",
-                "symfony/service-contracts": "^1.1|^2"
-            },
-            "conflict": {
-                "symfony/console": "<3.4",
-                "symfony/http-foundation": "<3.4"
-            },
-            "require-dev": {
-                "symfony/console": "^3.4|^4.0|^5.0",
-                "symfony/http-client": "^4.4|^5.0",
-                "symfony/security-core": "^3.4|^4.0|^5.0",
-                "symfony/var-dumper": "^3.4|^4.0|^5.0"
-            },
-            "suggest": {
-                "symfony/console": "For the possibility to show log messages in console commands depending on verbosity settings.",
-                "symfony/http-kernel": "For using the debugging handlers together with the response life cycle of the HTTP kernel.",
-                "symfony/var-dumper": "For using the debugging handlers like the console handler or the log server handler."
-            },
-            "type": "symfony-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Bridge\\Monolog\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides integration for Monolog with various Symfony components",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/monolog-bridge/tree/v4.4.43"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-06-16T12:12:11+00:00"
-        },
-        {
-            "name": "symfony/monolog-bundle",
-            "version": "v3.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/monolog-bundle.git",
-                "reference": "a41bbcdc1105603b6d73a7d9a43a3788f8e0fb7d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/a41bbcdc1105603b6d73a7d9a43a3788f8e0fb7d",
-                "reference": "a41bbcdc1105603b6d73a7d9a43a3788f8e0fb7d",
-                "shasum": ""
-            },
-            "require": {
-                "monolog/monolog": "^1.22 || ^2.0 || ^3.0",
-                "php": ">=7.1.3",
-                "symfony/config": "~4.4 || ^5.0 || ^6.0",
-                "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
-                "symfony/http-kernel": "~4.4 || ^5.0 || ^6.0",
-                "symfony/monolog-bridge": "~4.4 || ^5.0 || ^6.0"
-            },
-            "require-dev": {
-                "symfony/console": "~4.4 || ^5.0 || ^6.0",
-                "symfony/phpunit-bridge": "^5.2 || ^6.0",
-                "symfony/yaml": "~4.4 || ^5.0 || ^6.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Bundle\\MonologBundle\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony MonologBundle",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "log",
-                "logging"
-            ],
-            "support": {
-                "issues": "https://github.com/symfony/monolog-bundle/issues",
-                "source": "https://github.com/symfony/monolog-bundle/tree/v3.8.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-05-10T14:24:36+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -8338,16 +8091,16 @@
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
-            "version": "3.4.2",
+            "version": "3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "601988c5b46dbd20a0f886f967210aba378a6fd5"
+                "reference": "fd39829fed8f090ef6e185d33449d47c2fb59c9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/601988c5b46dbd20a0f886f967210aba378a6fd5",
-                "reference": "601988c5b46dbd20a0f886f967210aba378a6fd5",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/fd39829fed8f090ef6e185d33449d47c2fb59c9c",
+                "reference": "fd39829fed8f090ef6e185d33449d47c2fb59c9c",
                 "shasum": ""
             },
             "require": {
@@ -8401,7 +8154,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineFixturesBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineFixturesBundle/tree/3.4.2"
+                "source": "https://github.com/doctrine/DoctrineFixturesBundle/tree/3.4.3"
             },
             "funding": [
                 {
@@ -8417,7 +8170,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-28T17:58:29+00:00"
+            "time": "2023-04-11T12:37:36+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -9025,16 +8778,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.6",
+            "version": "9.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b65d59a059d3004a040c16a82e07bbdf6cfdd115"
+                "reference": "c993f0d3b0489ffc42ee2fe0bd645af1538a63b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b65d59a059d3004a040c16a82e07bbdf6cfdd115",
-                "reference": "b65d59a059d3004a040c16a82e07bbdf6cfdd115",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c993f0d3b0489ffc42ee2fe0bd645af1538a63b2",
+                "reference": "c993f0d3b0489ffc42ee2fe0bd645af1538a63b2",
                 "shasum": ""
             },
             "require": {
@@ -9108,7 +8861,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.6"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.7"
             },
             "funding": [
                 {
@@ -9124,7 +8877,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-27T11:43:46+00:00"
+            "time": "2023-04-14T08:58:40+00:00"
         },
         {
             "name": "sebastian/cli-parser",

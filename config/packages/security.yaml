@@ -33,7 +33,6 @@ security:
         register:
             pattern: ^/api/user
             anonymous: true
-            lexik_jwt: ~
         api:
             pattern: ^/api
             stateless: true
