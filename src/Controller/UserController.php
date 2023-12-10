@@ -47,7 +47,8 @@ class UserController extends AbstractFOSRestController
      *              @SWG\Property(property="name", type="string", example="Lorem"),
      *              @SWG\Property(property="surname", type="string", example="Ipsum"),
      *              @SWG\Property(property="email", type="string", example="lorem.ipsum@example.com"),
-     *              @SWG\Property(property="password", type="string", example="Lorem1234")
+     *              @SWG\Property(property="password", type="string", example="Lorem1234"),
+     *              @SWG\Property(property="phoneNumber", type="string", example="123456789")
      *                 )
      *)
      * ),

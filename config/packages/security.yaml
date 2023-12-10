@@ -1,4 +1,5 @@
 security:
+    enable_authenticator_manager: true
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER]
     encoders:
@@ -16,8 +17,7 @@ security:
         login:
             pattern: ^/api/login
             stateless: true
-            anonymous: true
-            form_login:
+            json_login:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
@@ -25,24 +25,19 @@ security:
         refresh:
             pattern:  ^/api/token/refresh
             stateless: true
-            anonymous: true
         swagger:
             pattern: ^/api/doc
             stateless: true
-            anonymous: true
         register:
             pattern: ^/api/user
-            anonymous: true
         api:
             pattern: ^/api
             stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+            jwt: ~
 
     access_control:
-        - { path: ^/api/user, methods: [POST], roles: [IS_AUTHENTICATED_ANONYMOUSLY, IS_AUTHENTICATED_FULLY] }
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/api/user, methods: [POST], roles: [PUBLIC_ACCESS] }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/doc, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS}
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

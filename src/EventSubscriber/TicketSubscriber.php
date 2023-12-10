@@ -31,7 +31,7 @@ final class TicketSubscriber implements EventSubscriberInterface
     {
         $ticket = $ticketEvent->getTicket();
         if ($ticket) {
-            $this->mailService->send($ticket, EmailTemplateService::NEW_TICKET_TEMPLATE);
+//            $this->mailService->send($ticket, EmailTemplateService::NEW_TICKET_TEMPLATE);
         }
     }
 

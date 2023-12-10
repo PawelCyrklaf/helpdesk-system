@@ -5,7 +5,8 @@ namespace App\EventListener;
 use App\Entity\Reply;
 use App\Entity\Ticket;
 use App\Entity\User;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Security;
 
